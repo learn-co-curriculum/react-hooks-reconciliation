@@ -24,3 +24,4 @@ worth emphasizing.
 ## Resources
 
 - [Why did we build React?](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
+- [React (Virtual) DOM Terminology](https://facebook.github.io/react/docs/glossary.html)
