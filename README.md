@@ -10,8 +10,8 @@
 ![React VR?](https://media.giphy.com/media/3o7qDL7l1IZAQvxvj2/giphy.gif)
 
 By now, you should already know what the DOM is: a programmatic representation of the document we see in the browser.
-So, what's all this virtual DOM ruckus about? Well, it turns out that our good 'ol friend DOM is slow — terribly slow. He
-makes a granny using a walker look like Usain Bolt.
+So, what's all this virtual DOM ruckus about? Well, it turns out that our good 'ol friend DOM is slow — terribly slow.
+He makes a turtle look like Usain Bolt.
 
 Virtual DOM is a technique employed by several front-end libraries and frameworks, most notably React. In a nutshell,
 virtual DOM builds a _virtual_ representation of what our document should look like. When we're ready to render things
