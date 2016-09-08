@@ -1,10 +1,13 @@
 # JavaScript Virtual DOM
 
+## Overview
+
+We'll introduce the virtual DOM and discuss the advantages and tradeoffs of using it. 
+
 ## Objectives
 
-1. Explain what a virtual DOM is
-2. Describe why a virtual DOM might be useful
-3. Describe some of the tradeoffs of using a virtual DOM
+1. Explain how a virtual DOM reduces load on the real DOM
+2. Describe some of the tradeoffs of using a virtual DOM
 
 ## What's a virtual DOM?
 ![React VR?](https://media.giphy.com/media/3o7qDL7l1IZAQvxvj2/giphy.gif)
