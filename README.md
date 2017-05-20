@@ -12,7 +12,7 @@ We'll introduce the virtual DOM and discuss the advantages and tradeoffs of usin
 ## What's a virtual DOM?
 ![React VR?](https://media.giphy.com/media/3o7qDL7l1IZAQvxvj2/giphy.gif)
 
-By now, you should already know what the DOM is: a programmatic representation of the document we see in the browser. So, what's all this virtual DOM ruckus about? Well, it turns out that our good 'ol friend DOM is slow — terribly slow. He makes a turtle look like Usain Bolt.
+By now, you should already know what the DOM is: a programmatic representation of the document we see in the browser. So, what's all this virtual DOM ruckus about? Well, it turns out that our good 'ol friend DOM is slow — terribly slow. It makes a turtle look like Usain Bolt.
 
 Virtual DOM is a technique employed by several front-end libraries and frameworks, most notably React. In a nutshell, virtual DOM builds a _virtual_ representation of what our document should look like. When we're ready to render things to the screen, the virtual DOM will take a look at the existing DOM and change only what needs to be changed (in more technical terms, it's diffing and re-rendering the changes).
 
@@ -32,3 +32,5 @@ Even though virtual DOM performs very well and used in several high-profile libr
 - [Why did we build React?](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
 - [The difference between Virtual DOM and DOM](http://reactkungfu.com/2015/10/the-difference-between-virtual-dom-and-dom/)
 - [React (Virtual) DOM Terminology](https://facebook.github.io/react/docs/glossary.html)
+
+<p class='util--hide'>View <a href='https://learn.co/lessons/javascript-virtual-dom'>Virtual DOM</a> on Learn.co and start learning to code for free.</p>
