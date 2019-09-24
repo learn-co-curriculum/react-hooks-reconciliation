@@ -26,7 +26,7 @@ In virtual DOM, we can just say 'okay, our document should look like _this_' —
 These abstractions also paved the road for non-DOM implementations for virtual DOM, for example React Native screen updates on phones. In this case, it's easier to think of DOM as a generic document, rather than the thing we see in our web browser.
 
 ## What's the catch?
-Even though virtual DOM performs very well and used in several high-profile libraries and frameworks, it's important to remember that it's still just a _really_ clever workaround to the DOM being slow. There are other solutions in the works (like Shadow DOM) by browser vendors to make the DOM faster, but for right now, virtual DOM seems to be our best bet.
+Even though virtual DOM performs very well and is used in several high-profile libraries and frameworks, it's important to remember that it's still just a _really_ clever workaround to the DOM being slow. There are other solutions in the works (like Shadow DOM) by browser vendors to make the DOM faster, but for right now, virtual DOM seems to be our best bet.
 
 ## Resources
 - [Why did we build React?](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
