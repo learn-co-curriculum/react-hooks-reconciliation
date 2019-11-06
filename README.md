@@ -1,36 +1,129 @@
-# JavaScript Virtual DOM
-
-## Overview
-
-We'll introduce the virtual DOM and discuss the advantages and tradeoffs of using it.
+# Reconciliation in React
 
 ## Objectives
 
-1. Explain how a virtual DOM reduces load on the real DOM
-2. Describe some of the tradeoffs of using a virtual DOM
+1. Explain how React handles DOM updates in a performant manner
 
-## What's a virtual DOM?
-![React VR?](https://media.giphy.com/media/3o7qDL7l1IZAQvxvj2/giphy.gif)
+## It Is Not a Virtual DOM
 
-By now, you should already know what the DOM is: a programmatic representation of the document we see in the browser. So, what's all this virtual DOM ruckus about? Well, it turns out that our good 'ol friend DOM is slow — terribly slow. It makes a turtle look like Usain Bolt.
+Earlier in the history of React, the term "Virtual DOM" was used to
+explain how React was able to perform better than the traditional
+DOM.
 
-Virtual DOM is a technique employed by several front-end libraries and frameworks, most notably React. In a nutshell, virtual DOM builds a _virtual_ representation of what our document should look like. When we're ready to render things to the screen, the virtual DOM will take a look at the existing DOM and change only what needs to be changed (in more technical terms, it's diffing and re-rendering the changes).
+The term 'Virtual DOM' fails to really explain what is happening and may lead to
+a misunderstanding of what is happening behind the scenes when React renders.
 
-The performance gains here are not to be underestimated. Virtual DOM is created by a bunch of super smart people using extremely efficient algorithms. Most virtual DOMs also batch their updates to the DOM, ensuring that the _real_ DOM gets modified as little as possible. The point is: it's best to touch and change the DOM as little as possible, and when we do, we do it with surgical precision. Think of virtual DOM as our personal DOM surgeon!
+<img src="https://curriculum-content.s3.amazonaws.com/react/virtual_dom_bad.png" alt="Dan Abramov No Longer Likes Virtual DOM" width="300"/>
 
-## So why use it?
-The above section should have already given you a good idea of when a virtual DOM is useful. It's a particularly great choice when we're building apps where changes in the interface happen a _lot_. By reducing the load on the real DOM, we can make our apps behave much more fluently and in line with what a user expects from software nowadays.
+In this lesson, we're going to briefly review how React handles updates to the
+screen. This process is known as Reconciliation
 
-In virtual DOM, we can just say 'okay, our document should look like _this_' — and the virtual DOM will do the heavy lifting for us (i.e. diffing the changes and applying them). This means that we don't need to write imperative code to update every tiny bit of our application, we just declare what the end result should look like, and the virtual DOM will do the rest! The ability to simply declare what our component should look like and how it should behave is a huge win. That means we can think more about how our UI fits together, rather than how we're supposed to be updating it!
+## Updating the DOM
 
-These abstractions also paved the road for non-DOM implementations for virtual DOM, for example React Native screen updates on phones. In this case, it's easier to think of DOM as a generic document, rather than the thing we see in our web browser.
+By now, you should already know what the DOM is: a programmatic representation
+of the document we see in the browser. In JavaScript applications, DOM elements
+can be added and changed with code. It's possible to build highly complex
+websites with with hundreds or thousands of DOM elements using plain JavaScript.
+Maybe more importantly, through the DOM, JavaScript allows us to build highly
+interactive webpages that update dynamically without refreshing. This can come
+with some challenges, though.
 
-## What's the catch?
-Even though virtual DOM performs very well and is used in several high-profile libraries and frameworks, it's important to remember that it's still just a _really_ clever workaround to the DOM being slow. There are other solutions in the works (like Shadow DOM) by browser vendors to make the DOM faster, but for right now, virtual DOM seems to be our best bet.
+When the DOM updates, the browser recalculates CSS, lays out the DOM tree and
+'repaints' the display. This typically happens so fast you barely notice.
+However, on a highly interactive website, or on a website where the JavaScript
+is updating the DOM excessively, the process of recalculating and repainting
+the display can result in noticeably poor performance.
+
+Any time you want your website or app to update without refreshing, you'll
+need to update the DOM; there is no avoiding it. However, React has some neat
+tricks for being smart about these updates.
+
+## Reconciliation, Briefly
+
+In React, we know that we write components that return JSX elements. These JSX
+elements represent DOM elements, and when rendered, become those elements on a
+webpage.
+
+During the initial render, React _also_ uses these elements to build a 'tree'
+that _represents_ what the DOM currently looks like, referred to as the
+**current** tree. When updates are made that would cause a re-render in React, a
+_second_ tree, the **workInProgress** tree is created, representing what the DOM
+_will_ look like. When all updates are processed, the **workInProgress** tree is
+used to update the DOM and the **current** tree is updated to reflect the new
+updates.
+
+This is a key part of React's performance optimization - React uses these trees
+as an intermediate step between updates within components (like a change of
+state) and updates to the DOM. This helps in two ways:
+
+### Grouped Updates
+
+Updates can be grouped together. By waiting until all updates are processed
+before committing the **workInProgress** tree to the DOM, excessive repaints are
+avoided.
+
+Say, for instance, you have an app with many components, each colored a shade of
+blue, and a button, that when pressed, turns all those components to red. When
+that button is pressed, React will put together a tree containing all the
+components along with their updated properties, _THEN_ commit all the changes to
+the DOM at once. This only requires one repaint. Without this design, we could
+end up with code that updates the DOM for each individual part of the app, one
+repaint for each part.
+
+### Diffing Changes
+
+In addition to grouping updates to the DOM, React can apply a diffing algorithm
+to quickly see what specific pieces of DOM _need_ to be updated and how. This
+reduces the number of DOM changes that need to be made and lets React be
+particular in its updates, improving performance.
+
+In plain JavaScript some DOM changes are better than others in terms of
+performance. For example, say you want to add something inside a `ul` in your
+DOM. Using `innerHTML` will work:
+
+```js
+ul.innerHTML += '<li>A final list item</li>'
+```
+
+But this _rebuilds_ the entire DOM inside `div`. On the other hand, using
+`appendChild` would _not_ cause a rebuild:
+
+```js
+let li = document.createElement('li')
+li.textContent = 'A final list item'
+ul.appendChild(li)
+```
+
+React's diffing algorithm is designed to identify changes between what the
+current DOM looks like and what it will look like (the **current** and
+**workInProgress** trees). Based on the changes it identifies, different
+DOM updates will be performed to avoid rebuilding unnecessarily.
+
+A more detailed explanation of the steps of this diffing process can be found
+in [React's Reconciliation documentation][reconciliation]
+
+## Conclusion
+
+There are some [misconceptions][1] [floating][2] [around][3] regarding the DOM
+being slow, often related to how frameworks like React can improve performance.
+While DOM manipulation _itself_ isn't 'slow,' repainting what is displayed in
+the browser can be.
+
+React can be very smart about handling DOM updates, which improves performance.
+Primarily, it does this in two ways: grouping DOM updates to prevent excessive
+repaints and being selective about what specifically needs to update and how.
+
+Read more a more in-depth dive on these concepts [here][fiber].
+
+[1]: https://www.quora.com/Why-is-Reacts-virtual-DOM-so-much-faster-than-the-real-DOM
+[2]: https://news.ycombinator.com/item?id=9155564
+[3]: https://www.reddit.com/r/javascript/comments/6115ay/why_do_developers_think_the_dom_is_slow/
 
 ## Resources
-- [Why did we build React?](https://facebook.github.io/react/blog/2013/06/05/why-react.html)
-- [The difference between Virtual DOM and DOM](http://reactkungfu.com/2015/10/the-difference-between-virtual-dom-and-dom/)
-- [React (Virtual) DOM Terminology](https://facebook.github.io/react/docs/glossary.html)
 
+- [Reconciliation][reconciliation]
+- [Inside Fiber: in-depth overview of the new reconciliation algorithm in React][fiber]
+
+[reconciliation]: https://reactjs.org/docs/reconciliation.html
+[fiber]: https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e
 <p class='util--hide'>View <a href='https://learn.co/lessons/javascript-virtual-dom'>Virtual DOM</a> on Learn.co and start learning to code for free.</p>
