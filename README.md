@@ -23,7 +23,7 @@ screen. This process is known as Reconciliation
 By now, you should already know what the DOM is: a programmatic representation
 of the document we see in the browser. In JavaScript applications, DOM elements
 can be added and changed with code. It's possible to build highly complex
-websites with with hundreds or thousands of DOM elements using plain JavaScript.
+websites with hundreds or thousands of DOM elements using plain JavaScript.
 Maybe more importantly, through the DOM, JavaScript allows us to build highly
 interactive webpages that update dynamically without refreshing. This can come
 with some challenges, though.
