@@ -6,17 +6,16 @@
 
 ## It Is Not a Virtual DOM
 
-Earlier in the history of React, the term "Virtual DOM" was used to
-explain how React was able to perform better than the traditional
-DOM.
+Earlier in the history of React, the term "Virtual DOM" was used to explain how
+React was able to perform better than the traditional DOM.
 
 The term 'Virtual DOM' fails to really explain what is happening and may lead to
 a misunderstanding of what is happening behind the scenes when React renders.
 
-<img src="https://curriculum-content.s3.amazonaws.com/react/virtual_dom_bad.png" alt="Dan Abramov No Longer Likes Virtual DOM" width="300"/>
+![Dan Abramov No Longer Likes Virtual DOM](https://curriculum-content.s3.amazonaws.com/react/virtual_dom_bad.png)
 
 In this lesson, we're going to briefly review how React handles updates to the
-screen. This process is known as Reconciliation
+screen. This process is known as [Reconciliation][reconciliation].
 
 ## Updating the DOM
 
@@ -86,12 +85,12 @@ ul.innerHTML += '<li>A final list item</li>'
 ```
 
 But this _rebuilds_ the entire DOM inside `div`. On the other hand, using
-`appendChild` would _not_ cause a rebuild:
+`append` would _not_ cause a rebuild:
 
 ```js
 let li = document.createElement('li')
 li.textContent = 'A final list item'
-ul.appendChild(li)
+ul.append(li)
 ```
 
 React's diffing algorithm is designed to identify changes between what the
@@ -100,7 +99,7 @@ current DOM looks like and what it will look like (the **current** and
 DOM updates will be performed to avoid rebuilding unnecessarily.
 
 A more detailed explanation of the steps of this diffing process can be found
-in [React's Reconciliation documentation][reconciliation]
+in [React's Reconciliation documentation][reconciliation].
 
 ## Conclusion
 
@@ -115,10 +114,6 @@ repaints and being selective about what specifically needs to update and how.
 
 Read more a more in-depth dive on these concepts [here][fiber].
 
-[1]: https://www.quora.com/Why-is-Reacts-virtual-DOM-so-much-faster-than-the-real-DOM
-[2]: https://news.ycombinator.com/item?id=9155564
-[3]: https://www.reddit.com/r/javascript/comments/6115ay/why_do_developers_think_the_dom_is_slow/
-
 ## Resources
 
 - [Reconciliation][reconciliation]
@@ -126,4 +121,8 @@ Read more a more in-depth dive on these concepts [here][fiber].
 
 [reconciliation]: https://reactjs.org/docs/reconciliation.html
 [fiber]: https://medium.com/react-in-depth/inside-fiber-in-depth-overview-of-the-new-reconciliation-algorithm-in-react-e1c04700ef6e
+[1]: https://www.quora.com/Why-is-Reacts-virtual-DOM-so-much-faster-than-the-real-DOM
+[2]: https://news.ycombinator.com/item?id=9155564
+[3]: https://www.reddit.com/r/javascript/comments/6115ay/why_do_developers_think_the_dom_is_slow/
+
 <p class='util--hide'>View <a href='https://learn.co/lessons/javascript-virtual-dom'>Virtual DOM</a> on Learn.co and start learning to code for free.</p>
