@@ -81,16 +81,16 @@ performance. For example, say you want to add something inside a `ul` in your
 DOM. Using `innerHTML` will work:
 
 ```js
-ul.innerHTML += '<li>A final list item</li>'
+ul.innerHTML += "<li>A final list item</li>";
 ```
 
 But this _rebuilds_ the entire DOM inside `div`. On the other hand, using
 `append` would _not_ cause a rebuild:
 
 ```js
-let li = document.createElement('li')
-li.textContent = 'A final list item'
-ul.append(li)
+let li = document.createElement("li");
+li.textContent = "A final list item";
+ul.append(li);
 ```
 
 React's diffing algorithm is designed to identify changes between what the
