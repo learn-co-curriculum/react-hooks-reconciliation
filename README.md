@@ -1,10 +1,10 @@
 # Reconciliation in React
 
-## Objectives
+## Learning Goals
 
-1. Explain how React handles DOM updates in a performant manner
+- Understand how React handles DOM updates in a performant manner
 
-## It Is Not a Virtual DOM
+## Introduction
 
 Earlier in the history of React, the term "Virtual DOM" was used to explain how
 React was able to perform better than the traditional DOM.
@@ -45,15 +45,16 @@ webpage.
 
 During the initial render, React _also_ uses these elements to build a 'tree'
 that _represents_ what the DOM currently looks like, referred to as the
-**current** tree. When updates are made that would cause a re-render in React, a
-_second_ tree, the **workInProgress** tree is created, representing what the DOM
-_will_ look like. When all updates are processed, the **workInProgress** tree is
-used to update the DOM and the **current** tree is updated to reflect the new
-updates.
+**current** tree.
 
-This is a key part of React's performance optimization - React uses these trees
-as an intermediate step between updates within components (like a change of
-state) and updates to the DOM. This helps in two ways:
+When updates are made that would cause a re-render in React, a _second_ tree,
+the **workInProgress** tree is created, representing what the DOM _will_ look
+like. When all updates are processed, the **workInProgress** tree is used to
+update the DOM and the **current** tree is updated to reflect the new updates.
+
+This is a key part of React's performance optimization &mdash; React uses these
+trees as an intermediate step between updates within components (like a change
+of state) and updates to the DOM. This helps in two ways:
 
 ### Grouped Updates
 
@@ -72,11 +73,12 @@ repaint for each part.
 ### Diffing Changes
 
 In addition to grouping updates to the DOM, React can apply a diffing algorithm
-to quickly see what specific pieces of DOM _need_ to be updated and how. This
-reduces the number of DOM changes that need to be made and lets React be
-particular in its updates, improving performance.
+to determine the difference between the **current** tree and the
+**workInProgress** tree, and quickly see what specific pieces of DOM _need_ to
+be updated and how. This reduces the number of DOM changes that need to be made
+and lets React be particular in its updates, improving performance.
 
-In plain JavaScript some DOM changes are better than others in terms of
+In plain JavaScript, some DOM changes are better than others in terms of
 performance. For example, say you want to add something inside a `ul` in your
 DOM. Using `innerHTML` will work:
 
@@ -112,7 +114,7 @@ React can be very smart about handling DOM updates, which improves performance.
 Primarily, it does this in two ways: grouping DOM updates to prevent excessive
 repaints and being selective about what specifically needs to update and how.
 
-Read more a more in-depth dive on these concepts [here][fiber].
+Read a more in-depth dive on these concepts [here][fiber].
 
 ## Resources
 
@@ -124,5 +126,3 @@ Read more a more in-depth dive on these concepts [here][fiber].
 [1]: https://www.quora.com/Why-is-Reacts-virtual-DOM-so-much-faster-than-the-real-DOM
 [2]: https://news.ycombinator.com/item?id=9155564
 [3]: https://www.reddit.com/r/javascript/comments/6115ay/why_do_developers_think_the_dom_is_slow/
-
-<p class='util--hide'>View <a href='https://learn.co/lessons/javascript-virtual-dom'>Virtual DOM</a> on Learn.co and start learning to code for free.</p>
