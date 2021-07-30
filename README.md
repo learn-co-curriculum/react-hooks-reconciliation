@@ -52,7 +52,7 @@ the **workInProgress** tree is created, representing what the DOM _will_ look
 like. When all updates are processed, the **workInProgress** tree is used to
 update the DOM and the **current** tree is updated to reflect the new updates.
 
-This is a key part of React's performance optimization &mdash; React uses these
+This is a key part of React's performance optimization — React uses these
 trees as an intermediate step between updates within components (like a change
 of state) and updates to the DOM. This helps in two ways:
 
