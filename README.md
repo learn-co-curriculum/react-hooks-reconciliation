@@ -10,7 +10,7 @@ Earlier in the history of React, the term "Virtual DOM" was used to explain how
 React was able to perform better than the traditional DOM.
 
 The term 'Virtual DOM' fails to really explain what is happening and may lead to
-a misunderstanding of what is happening behind the scenes when React renders.
+a misunderstanding of what is going on behind the scenes when React renders.
 
 ![Dan Abramov No Longer Likes Virtual DOM](https://curriculum-content.s3.amazonaws.com/react/virtual_dom_bad.png)
 
@@ -52,18 +52,19 @@ the **workInProgress** tree is created, representing what the DOM _will_ look
 like. When all updates are processed, the **workInProgress** tree is used to
 update the DOM and the **current** tree is updated to reflect the new updates.
 
-This is a key part of React's performance optimization — React uses these
-trees as an intermediate step between updates within components (like a change
-of state) and updates to the DOM. This helps in two ways:
+This is a key part of React's performance optimization — React uses these trees
+as an intermediate step between updates within components, such as a change of
+state, and updates to the DOM. This approach enables React to use two techniques
+that improve performance: grouped updates and diffing changes.
 
 ### Grouped Updates
 
-Updates can be grouped together. By waiting until all updates are processed
-before committing the **workInProgress** tree to the DOM, excessive repaints are
-avoided.
+Because React creates a **workInProgress** tree, updates can be grouped
+together. By waiting until all updates are processed before committing the
+**workInProgress** tree to the DOM, excessive repaints are avoided.
 
 Say, for instance, you have an app with many components, each colored a shade of
-blue, and a button, that when pressed, turns all those components to red. When
+blue, and a button that, when pressed, turns all those components to red. When
 that button is pressed, React will put together a tree containing all the
 components along with their updated properties, _THEN_ commit all the changes to
 the DOM at once. This only requires one repaint. Without this design, we could
@@ -73,32 +74,11 @@ repaint for each part.
 ### Diffing Changes
 
 In addition to grouping updates to the DOM, React can apply a diffing algorithm
-to determine the difference between the **current** tree and the
-**workInProgress** tree, and quickly see what specific pieces of DOM _need_ to
-be updated and how. This reduces the number of DOM changes that need to be made
-and lets React be particular in its updates, improving performance.
-
-In plain JavaScript, some DOM changes are better than others in terms of
-performance. For example, say you want to add something inside a `ul` in your
-DOM. Using `innerHTML` will work:
-
-```js
-ul.innerHTML += "<li>A final list item</li>";
-```
-
-But this _rebuilds_ the entire DOM inside `div`. On the other hand, using
-`append` would _not_ cause a rebuild:
-
-```js
-let li = document.createElement("li");
-li.textContent = "A final list item";
-ul.append(li);
-```
-
-React's diffing algorithm is designed to identify changes between what the
-current DOM looks like and what it will look like (the **current** and
-**workInProgress** trees). Based on the changes it identifies, different
-DOM updates will be performed to avoid rebuilding unnecessarily.
+to identify changes between what the current DOM looks like (the **current**
+tree) and what it will look like (the **workInProgress** tree), and quickly see
+what specific pieces of DOM _need_ to be updated and how. This reduces the
+number of DOM changes that need to be made and lets React be particular in its
+updates, improving performance.
 
 A more detailed explanation of the steps of this diffing process can be found
 in [React's Reconciliation documentation][reconciliation].
