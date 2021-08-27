@@ -80,6 +80,28 @@ what specific pieces of DOM _need_ to be updated and how. This reduces the
 number of DOM changes that need to be made and lets React be particular in its
 updates, improving performance.
 
+In plain JavaScript — which you'll remember is what React is creating for us
+under the hood — some DOM changes are better than others in terms of
+performance. For example, say you want to add something inside a `ul` in your
+DOM. Using `innerHTML` will work:
+
+```js
+ul.innerHTML += "<li>A final list item</li>";
+```
+
+But this _rebuilds_ the entire DOM inside `div`. On the other hand, using
+`append` would _not_ cause a rebuild:
+
+```js
+let li = document.createElement("li");
+li.textContent = "A final list item";
+ul.append(li);
+```
+
+React compares the **current** and **workInProgress** trees, identifies which
+pieces of the DOM need updating, and then uses the most efficient means for
+making each update.
+
 A more detailed explanation of the steps of this diffing process can be found
 in [React's Reconciliation documentation][reconciliation].
 
